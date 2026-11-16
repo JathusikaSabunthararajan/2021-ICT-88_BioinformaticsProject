@@ -1,85 +1,116 @@
-# Bioinformatics Project
-# Bacterial DNA Sequence Analysis
-# Project: Comparative DNA Sequence Analysis
+
+# ==========================================
+# BIOINFORMATICS PROJECT
+# Comparative DNA Sequence Analysis
+# ==========================================
+
+# Step 1: Load required packages
+
+library(Biostrings)
+library(ggplot2)
 
 
-# Create required project folders
+# Step 2: Create required project folders
 
 dir.create("data", showWarnings = FALSE)
 dir.create("results/graphs", recursive = TRUE, showWarnings = FALSE)
 dir.create("report", showWarnings = FALSE)
 
 
-
-# Step 5: Download DNA sequences from NCBI
+# ==========================================
+# Step 3: Download DNA Sequences from NCBI
+# ==========================================
 
 # E. coli
-download.file(
-  "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=J01859.1&rettype=fasta&retmode=text",
-  "data/ecoli.fasta",
-  mode = "wb"
-)
+
+if (!file.exists("data/ecoli.fasta")) {
+  download.file(
+    "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=J01859.1&rettype=fasta&retmode=text",
+    "data/ecoli.fasta",
+    mode = "wb"
+  )
+}
 
 # Salmonella enterica
-download.file(
-  "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=MG869135.1&rettype=fasta&retmode=text",
-  "data/salmonella.fasta",
-  mode = "wb"
-)
+
+if (!file.exists("data/salmonella.fasta")) {
+  download.file(
+    "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=MG869135.1&rettype=fasta&retmode=text",
+    "data/salmonella.fasta",
+    mode = "wb"
+  )
+}
 
 # Klebsiella pneumoniae
-download.file(
-  "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=X93214.1&rettype=fasta&retmode=text",
-  "data/klebsiella.fasta",
-  mode = "wb"
-)
+
+if (!file.exists("data/klebsiella.fasta")) {
+  download.file(
+    "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=X93214.1&rettype=fasta&retmode=text",
+    "data/klebsiella.fasta",
+    mode = "wb"
+  )
+}
 
 # Check downloaded files
+
 list.files("data")
 
 
 # ==========================================
-# Step 6: Import DNA sequences
+# Step 4: Import DNA Sequences
 # ==========================================
 
-# Load Biostrings package
-library(Biostrings)
-
-# Import E. coli sequence
 ecoli <- readDNAStringSet("data/ecoli.fasta")
 
-# Import Salmonella sequence
 salmonella <- readDNAStringSet("data/salmonella.fasta")
 
-# Import Klebsiella sequence
 klebsiella <- readDNAStringSet("data/klebsiella.fasta")
 
+
 # Display imported sequences
+
 ecoli
 salmonella
 klebsiella
 
-# Calculate DNA sequence lengths
 
-width(ecoli)
-width(salmonella)
-width(klebsiella)
+# ==========================================
+# Step 5: Calculate DNA Sequence Length
+# ==========================================
+
+ecoli_length <- as.numeric(width(ecoli))
+
+salmonella_length <- as.numeric(width(salmonella))
+
+klebsiella_length <- as.numeric(width(klebsiella))
+
+# Display sequence lengths
+
+ecoli_length
+salmonella_length
+klebsiella_length
 
 
 # ==========================================
-# Step 7: Nucleotide Composition Analysis
+# Step 6: Nucleotide Composition Analysis
 # ==========================================
 
 # Calculate nucleotide frequencies
 
-ecoli_counts <- letterFrequency(ecoli,
-                                letters = c("A", "T", "G", "C"))
+ecoli_counts <- letterFrequency(
+  ecoli,
+  letters = c("A", "T", "G", "C")
+)
 
-salmonella_counts <- letterFrequency(salmonella,
-                                     letters = c("A", "T", "G", "C"))
+salmonella_counts <- letterFrequency(
+  salmonella,
+  letters = c("A", "T", "G", "C")
+)
 
-klebsiella_counts <- letterFrequency(klebsiella,
-                                     letters = c("A", "T", "G", "C"))
+klebsiella_counts <- letterFrequency(
+  klebsiella,
+  letters = c("A", "T", "G", "C")
+)
 
 # Display nucleotide counts
 
@@ -88,131 +119,126 @@ salmonella_counts
 klebsiella_counts
 
 
-
 # ==========================================
-# Calculate GC Content
-# ==========================================
-
-ecoli_gc <- letterFrequency(ecoli, "GC", as.prob = TRUE) * 100
-
-salmonella_gc <- letterFrequency(salmonella, "GC", as.prob = TRUE) * 100
-
-klebsiella_gc <- letterFrequency(klebsiella, "GC", as.prob = TRUE) * 100
-
-# Display GC percentages
-
-ecoli_gc
-salmonella_gc
-klebsiella_gc
-
-
-
-# ==========================================
-# Create Comparison Table
+# Step 7: Create Comparison Table
 # ==========================================
 
 dna_results <- data.frame(
   
-  Species = c("Escherichia coli",
-              "Salmonella enterica",
-              "Klebsiella pneumoniae"),
-  
-  Sequence_Length = c(
-    as.numeric(width(ecoli)),
-    as.numeric(width(salmonella)),
-    as.numeric(width(klebsiella))
+  Species = c(
+    "Escherichia coli",
+    "Salmonella enterica",
+    "Klebsiella pneumoniae"
   ),
   
-  A = c(ecoli_counts[1, "A"],
-        salmonella_counts[1, "A"],
-        klebsiella_counts[1, "A"]),
+  Sequence_Length = c(
+    ecoli_length,
+    salmonella_length,
+    klebsiella_length
+  ),
   
-  T = c(ecoli_counts[1, "T"],
-        salmonella_counts[1, "T"],
-        klebsiella_counts[1, "T"]),
+  A = c(
+    ecoli_counts[1, "A"],
+    salmonella_counts[1, "A"],
+    klebsiella_counts[1, "A"]
+  ),
   
-  G = c(ecoli_counts[1, "G"],
-        salmonella_counts[1, "G"],
-        klebsiella_counts[1, "G"]),
+  T = c(
+    ecoli_counts[1, "T"],
+    salmonella_counts[1, "T"],
+    klebsiella_counts[1, "T"]
+  ),
   
-  C = c(ecoli_counts[1, "C"],
-        salmonella_counts[1, "C"],
-        klebsiella_counts[1, "C"]),
+  G = c(
+    ecoli_counts[1, "G"],
+    salmonella_counts[1, "G"],
+    klebsiella_counts[1, "G"]
+  ),
   
-  GC_Percentage = c(
-    as.numeric(ecoli_gc),
-    as.numeric(salmonella_gc),
-    as.numeric(klebsiella_gc)
+  C = c(
+    ecoli_counts[1, "C"],
+    salmonella_counts[1, "C"],
+    klebsiella_counts[1, "C"]
   )
 )
 
-# Display final results
 
-print(dna_results)
+# ==========================================
+# Step 8: Calculate GC Content
+# ==========================================
 
-# Save results as CSV
+# Count confirmed DNA bases (A, T, G, C)
 
-write.csv(dna_results,
-          "results/dna_analysis_results.csv",
-          row.names = FALSE)
-
-
-# Step 7.1: Correct GC content calculation
-
-# Count confirmed DNA bases
 confirmed_bases <- c(
   sum(ecoli_counts),
   sum(salmonella_counts),
   sum(klebsiella_counts)
 )
 
-# Calculate GC percentage using confirmed bases
-dna_results$GC_Percentage <- round(
+# Calculate GC percentage
+# Ambiguous bases are excluded from the denominator
+
+gc_percentage <- round(
   c(
-    (ecoli_counts[1,"G"] + ecoli_counts[1,"C"]) / confirmed_bases[1] * 100,
-    (salmonella_counts[1,"G"] + salmonella_counts[1,"C"]) / confirmed_bases[2] * 100,
-    (klebsiella_counts[1,"G"] + klebsiella_counts[1,"C"]) / confirmed_bases[3] * 100
-  ), 2
+    (ecoli_counts[1, "G"] + ecoli_counts[1, "C"]) /
+      confirmed_bases[1] * 100,
+    
+    (salmonella_counts[1, "G"] + salmonella_counts[1, "C"]) /
+      confirmed_bases[2] * 100,
+    
+    (klebsiella_counts[1, "G"] + klebsiella_counts[1, "C"]) /
+      confirmed_bases[3] * 100
+  ),
+  2
 )
+
+# Add GC percentage to results table
+
+dna_results$GC_Percentage <- gc_percentage
+
 
 # Calculate ambiguous bases
+
 dna_results$Ambiguous_Bases <- c(
-  width(ecoli) - confirmed_bases[1],
-  width(salmonella) - confirmed_bases[2],
-  width(klebsiella) - confirmed_bases[3]
+  ecoli_length - confirmed_bases[1],
+  salmonella_length - confirmed_bases[2],
+  klebsiella_length - confirmed_bases[3]
 )
 
-# Display updated table
+
+# Display final results
+
 print(dna_results)
 
-# Save updated CSV
-write.csv(dna_results, "results/dna_analysis_results.csv",
-          row.names = FALSE)
+
+# Save results as CSV
+
+write.csv(
+  dna_results,
+  "results/dna_analysis_results.csv",
+  row.names = FALSE
+)
 
 
-
-
-# Step 8: Data Visualization
-
-library(ggplot2)
-
-# Check package
-
-
-
-
+# ==========================================
+# Step 9: Data Visualization
+# ==========================================
 
 
 # Graph 1: GC Content Comparison
 
-gc_plot <- ggplot(dna_results,
-                  aes(x = Species, y = GC_Percentage,
-                      fill = Species)) +
+gc_plot <- ggplot(
+  dna_results,
+  aes(x = Species, y = GC_Percentage, fill = Species)
+) +
   
   geom_col(width = 0.6) +
   
-  geom_text(aes(label = paste0(GC_Percentage, "%")),
-            vjust = -0.5, size = 4) +
+  geom_text(
+    aes(label = paste0(GC_Percentage, "%")),
+    vjust = -0.5,
+    size = 4
+  ) +
   
   labs(
     title = "GC Content Comparison",
@@ -224,16 +250,20 @@ gc_plot <- ggplot(dna_results,
   
   theme(legend.position = "none")
 
+
 # Display graph
+
 print(gc_plot)
 
+
 # Save graph
-ggsave("results/graphs/gc_content.png",
-       plot = gc_plot,
-       width = 8,
-       height = 5)
 
-
+ggsave(
+  "results/graphs/gc_content.png",
+  plot = gc_plot,
+  width = 8,
+  height = 5
+)
 
 
 
@@ -243,7 +273,10 @@ nucleotide_data <- data.frame(
   
   Species = rep(dna_results$Species, 4),
   
-  Nucleotide = rep(c("A", "T", "G", "C"), each = 3),
+  Nucleotide = rep(
+    c("A", "T", "G", "C"),
+    each = 3
+  ),
   
   Count = c(
     dna_results$A,
@@ -252,6 +285,7 @@ nucleotide_data <- data.frame(
     dna_results$C
   )
 )
+
 
 nucleotide_plot <- ggplot(
   nucleotide_data,
@@ -269,16 +303,20 @@ nucleotide_plot <- ggplot(
   
   theme_minimal()
 
+
 # Display graph
+
 print(nucleotide_plot)
 
+
 # Save graph
-ggsave("results/graphs/nucleotide_composition.png",
-       plot = nucleotide_plot,
-       width = 9,
-       height = 5)
 
-
+ggsave(
+  "results/graphs/nucleotide_composition.png",
+  plot = nucleotide_plot,
+  width = 9,
+  height = 5
+)
 
 
 
@@ -291,8 +329,11 @@ length_plot <- ggplot(
   
   geom_col(width = 0.6) +
   
-  geom_text(aes(label = Sequence_Length),
-            vjust = -0.5, size = 4) +
+  geom_text(
+    aes(label = Sequence_Length),
+    vjust = -0.5,
+    size = 4
+  ) +
   
   labs(
     title = "DNA Sequence Length Comparison",
@@ -304,20 +345,24 @@ length_plot <- ggplot(
   
   theme(legend.position = "none")
 
+
 # Display graph
+
 print(length_plot)
 
+
 # Save graph
-ggsave("results/graphs/sequence_length.png",
-       plot = length_plot,
-       width = 8,
-       height = 5)
 
-
+ggsave(
+  "results/graphs/sequence_length.png",
+  plot = length_plot,
+  width = 8,
+  height = 5
+)
 
 
 # ==========================================
-# Step 9: Biological Interpretation
+# Step 10: Biological Interpretation
 # ==========================================
 
 findings <- c(
@@ -353,9 +398,22 @@ findings <- c(
   "The three bacterial 16S rRNA sequences showed relatively similar GC percentages."
 )
 
+
 # Display findings
+
 cat(findings, sep = "\n")
 
-# Save findings
-writeLines(findings, "report/findings.txt")
 
+# Save findings
+
+writeLines(
+  findings,
+  "report/findings.txt"
+)
+
+
+# ==========================================
+# PROJECT COMPLETED
+# ==========================================
+
+print("DNA Sequence Analysis Completed Successfully!")
