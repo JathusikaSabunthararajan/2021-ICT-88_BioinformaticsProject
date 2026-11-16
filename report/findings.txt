@@ -1,0 +1,19 @@
+BIOINFORMATICS PROJECT - KEY FINDINGS
+
+1. GC Content:
+Klebsiella pneumoniae showed the highest GC content (55.06%).
+Escherichia coli showed the lowest GC content (54.45%).
+
+2. DNA Sequence Length:
+Escherichia coli had the longest sequence (1541 bp).
+Klebsiella pneumoniae had the shortest sequence (1458 bp).
+
+3. Nucleotide Composition:
+Guanine (G) was the most frequent nucleotide in all three sequences.
+
+4. Ambiguous Bases:
+Klebsiella pneumoniae contained five ambiguous nucleotide positions.
+The other two sequences contained no ambiguous positions.
+
+5. Overall Observation:
+The three bacterial 16S rRNA sequences showed relatively similar GC percentages.

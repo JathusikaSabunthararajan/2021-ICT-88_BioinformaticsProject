@@ -1,0 +1,4 @@
+"Species","Sequence_Length","A","T","G","C","GC_Percentage","Ambiguous_Bases"
+"Escherichia coli",1541,389,313,487,352,54.45,0
+"Salmonella enterica",1501,375,305,477,344,54.7,0
+"Klebsiella pneumoniae",1458,364,289,463,337,55.06,5
