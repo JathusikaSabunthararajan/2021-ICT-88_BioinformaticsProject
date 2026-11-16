@@ -1,0 +1,19 @@
+REPRODUCIBILITY
+
+This project was developed using RStudio and the R programming language.
+
+Required R packages:
+- Biostrings
+- ggplot2
+
+To reproduce the analysis:
+
+1. Open the Bacterial_DNA_Sequence_Analysis project in RStudio.
+2. Ensure the required packages are installed.
+3. Open code/01_data_import.R.
+4. Run the complete R script.
+5. The analysis results will be saved in the results folder.
+6. The visualizations will be saved in results/graphs.
+7. The biological findings will be saved in report/findings.txt.
+
+The project uses publicly available bacterial 16S rRNA sequences from the NCBI Nucleotide Database.
