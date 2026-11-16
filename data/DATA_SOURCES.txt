@@ -1,0 +1,19 @@
+BIOLOGICAL DATA SOURCES
+
+This project uses three bacterial 16S rRNA nucleotide sequences obtained from the NCBI Nucleotide Database.
+
+1. Escherichia coli
+Accession Number: J01859.1
+Source: https://www.ncbi.nlm.nih.gov/nuccore/J01859.1
+
+2. Salmonella enterica
+Accession Number: MG869135.1
+Source: https://www.ncbi.nlm.nih.gov/nuccore/MG869135.1
+
+3. Klebsiella pneumoniae
+Accession Number: X93214.1
+Source: https://www.ncbi.nlm.nih.gov/nuccore/X93214.1
+
+All sequences were retrieved in FASTA format using the NCBI E-utilities service.
+
+Analysis was performed using R and the Biostrings and ggplot2 packages.
