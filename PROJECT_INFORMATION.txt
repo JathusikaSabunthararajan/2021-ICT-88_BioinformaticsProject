@@ -1,0 +1,19 @@
+PROJECT INFORMATION
+
+Project Title: Comparative DNA Sequence Analysis of Selected Bacterial Species
+
+This project analyses three bacterial 16S rRNA sequences:
+1. Escherichia coli
+2. Salmonella enterica
+3. Klebsiella pneumoniae
+
+The project compares DNA sequence length, nucleotide composition, GC content and ambiguous nucleotide bases.
+
+Tools Used:
+- R Programming Language
+- RStudio
+- Biostrings
+- ggplot2
+- NCBI Nucleotide Database
+
+The project demonstrates basic bioinformatics sequence analysis and visualization.
